@@ -1,0 +1,1 @@
+web: voila notebooks/QHO_QuantumApp.ipynb --port=$PORT --no-browser
