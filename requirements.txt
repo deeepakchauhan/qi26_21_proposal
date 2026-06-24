@@ -7,5 +7,4 @@ voila
 numpy
 scipy
 matplotlib
-pylatexenc
-jupyter 
+pylatexenc 
