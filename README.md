@@ -1,52 +1,51 @@
-# Quantum Harmonic Oscillator Ground-State Estimation using VQE
+# 🔬 Quantum Harmonic Oscillator Ground State Estimator
 
-## Overview
-
-This project implements the Variational Quantum Eigensolver (VQE) to estimate the ground-state energy of a Quantum Harmonic Oscillator (QHO) using Qiskit Nature.
-
-The workflow demonstrates the complete hybrid quantum-classical pipeline:
-
-BosonicOp → BosonicLinearMapper → SparsePauliOp → Variational Ansatz → Estimator → COBYLA Optimizer
-
-The VQE result is compared against the exact analytical solution and exact diagonalization results.
+**Author:** Deepak Chauhan
+**Program:** Integrated MSc Physics, NIT Surat
+**Project:** QIntern'26 Proposal — Phase 2
 
 ---
 
-## Objectives
+## What This Project Does
 
-* Construct the QHO Hamiltonian in second quantization.
-* Map bosonic operators to qubit operators.
-* Implement a variational quantum circuit (ansatz).
-* Optimize circuit parameters using COBYLA.
-* Estimate the ground-state energy using VQE.
-* Compare VQE results with exact solutions.
+This project implements a **Variational Quantum Eigensolver (VQE)**
+to estimate the ground state energy of the Quantum Harmonic Oscillator (QHO):
 
----
+$$E_0 = \frac{1}{2}\hbar\omega$$
 
-## Technologies Used
-
-* Python
-* Qiskit
-* Qiskit Nature
-* NumPy
-* SciPy
-* Matplotlib
+using IBM's `qiskit-nature` library, executed on `AerSimulator`.
 
 ---
 
-## Future Work
+## Tech Stack
 
-* Multi-mode harmonic oscillators
-* Coupled oscillators
-* Vibrational quantum chemistry
-* Execution on IBM Quantum hardware
-* Advanced ansatz design and error mitigation
+| Tool | Version | Role |
+|------|---------|------|
+| Qiskit | 2.4.1 | Core quantum SDK |
+| qiskit-nature | 0.7.2 | Bosonic Hamiltonian construction |
+| qiskit-aer | 0.15.0 | Cloud simulator backend |
+| ipywidgets + Voilà | latest | Interactive visual dashboard |
+| COBYLA (scipy) | latest | Classical optimizer |
 
 ---
 
-## Author
+## Results
 
-Deepak Chauhan
+| Method | E₀ (ℏω units) | Error |
+|--------|--------------|-------|
+| Exact (NumPy) | 0.50000000 | — |
+| VQE (COBYLA) | 0.50000000 | < 10⁻⁸ |
 
-Integrated MSc Physics 
-SVNIT Surat
+VQE recovered the ground state energy to **machine precision**
+in ~23 optimizer iterations.
+
+---
+
+## Project Structure
+qi26_21_proposal/
+
+├── QHO_Notebook.ipynb         
+
+├── requirements.txt       
+
+└── README.md              
