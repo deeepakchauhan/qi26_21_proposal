@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QHO Ground State Estimator — Deepak Chauhan</title>
+  <style>
+    /* ── Global reset and font ───────────────────────── */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    /* Removes default browser spacing from all elements */
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f172a;
+      /* Dark navy background for the entire page */
+      color: #e2e8f0;
+      /* Light grey text — readable on dark background */
+      line-height: 1.7;
+    }
+
+    /* ── Top navigation bar ──────────────────────────── */
+    nav {
+      background: #1e293b;
+      padding: 14px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #334155;
+      position: sticky;
+      top: 0;
+      /* sticky: nav stays at top when user scrolls down */
+      z-index: 100;
+    }
+    nav .logo {
+      font-size: 16px;
+      font-weight: 600;
+      color: #a78bfa;
+    }
+    nav .links a {
+      color: #94a3b8;
+      text-decoration: none;
+      margin-left: 24px;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+    nav .links a:hover { color: #a78bfa; }
+    /* Hover effect: links turn purple when mouse is over them */
+
+    /* ── Hero / Banner section ───────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #1e1b4b, #0f172a, #0c1445);
+      /* Three-colour diagonal gradient for the banner */
+      padding: 80px 40px 60px;
+      text-align: center;
+      border-bottom: 1px solid #334155;
+    }
+    .hero .badge {
+      display: inline-block;
+      background: #312e81;
+      color: #a5b4fc;
+      font-size: 12px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      /* Pill-shaped badge */
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 700;
+      color: #f8fafc;
+      margin-bottom: 12px;
+    }
+    .hero h1 span { color: #a78bfa; }
+    /* The word "Quantum" will be purple */
+
+    .hero p {
+      font-size: 17px;
+      color: #94a3b8;
+      max-width: 640px;
+      margin: 0 auto 32px;
+    }
+    .hero .buttons { display: flex; gap: 14px; justify-content: center; }
+    .btn {
+      padding: 11px 26px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: opacity 0.2s;
+      display: inline-block;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn-primary { background: #7c3aed; color: white; }
+    /* Purple button — for the main action */
+    .btn-secondary {
+      background: transparent;
+      color: #a78bfa;
+      border: 1px solid #4c1d95;
+    }
+    /* Outlined button — secondary action */
+
+    /* ── Section containers ──────────────────────────── */
+    section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 60px 24px;
+    }
+    section h2 {
+      font-size: 26px;
+      color: #7dd3fc;
+      margin-bottom: 24px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #1e3a5f;
+    }
+
+    /* ── Info cards (pipeline steps, tech stack) ─────── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      /* Responsive grid — fits as many columns as possible */
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .card .icon { font-size: 28px; margin-bottom: 10px; }
+    .card h3 { color: #a78bfa; font-size: 15px; margin-bottom: 6px; }
+    .card p { color: #94a3b8; font-size: 13px; }
+
+    /* ── Results table ───────────────────────────────── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      /* Removes double borders between cells */
+      margin-top: 16px;
+      font-size: 15px;
+    }
+    th {
+      background: #1e3a5f;
+      color: #7dd3fc;
+      padding: 12px 16px;
+      text-align: left;
+    }
+    td {
+      padding: 11px 16px;
+      border-bottom: 1px solid #1e293b;
+      color: #cbd5e1;
+    }
+    tr:hover td { background: #1e293b; }
+    /* Row highlights on hover */
+    .tag-good { color: #86efac; font-weight: 600; }
+    /* Green colour for positive/correct values */
+
+    /* ── Pipeline diagram (text-based) ──────────────── */
+    .pipeline {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .pipe-step {
+      background: #1e293b;
+      border: 1px solid #4c1d95;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 13px;
+      color: #a78bfa;
+    }
+    .pipe-arrow { color: #475569; font-size: 20px; }
+    /* Grey arrow between pipeline steps */
+
+    /* ── Code block ──────────────────────────────────── */
+    pre {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      padding: 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: #86efac;
+      /* Green text for terminal commands */
+      overflow-x: auto;
+      /* Horizontal scroll if code is too wide */
+    }
+
+    /* ── Energy result highlight box ────────────────── */
+    .result-box {
+      background: #0d2d1a;
+      border-left: 4px solid #86efac;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-top: 20px;
+    }
+    .result-box p { color: #86efac; font-size: 16px; }
+    .result-box .big {
+      font-size: 36px;
+      font-weight: 700;
+      color: #4ade80;
+      font-family: monospace;
+    }
+
+    /* ── Footer ──────────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 32px;
+      border-top: 1px solid #1e293b;
+      color: #475569;
+      font-size: 13px;
+    }
+    footer a { color: #7c3aed; text-decoration: none; }
+  </style>
+</head>
+
+<body>
+
+<!-- ── NAVIGATION BAR ──────────────────────────────────── -->
+<nav>
+  <div class="logo">⚛ QHO Estimator</div>
+  <div class="links">
+    <a href="#about">About</a>
+    <a href="#pipeline">Pipeline</a>
+    <a href="#results">Results</a>
+    <a href="#run">Run It</a>
+    <a href="https://github.com/deeepakchauhan/qi26_21_proposal"
+       target="_blank">GitHub ↗</a>
+    <!--
+      target="_blank": opens GitHub repo in a new tab
+      so the user doesn't leave your webpage
+    -->
+  </div>
+</nav>
+
+<!-- ── HERO BANNER ─────────────────────────────────────── -->
+<div class="hero">
+  <div class="badge">QIntern'26 — Phase 2 Proposal</div>
+  <h1>🔬 <span>Quantum</span> Harmonic Oscillator<br>Ground State Estimator</h1>
+  <p>
+    A VQE-based quantum simulation using <strong>qiskit-nature</strong>,
+    executed on IBM's AerSimulator, with an interactive visual dashboard —
+    no coding required to use it.
+  </p>
+  <div class="buttons">
+    <a href="#run" class="btn btn-primary">▶ How to Run</a>
+    <a href="https://github.com/deeepakchauhan/qi26_21_proposal"
+       target="_blank" class="btn btn-secondary">View on GitHub ↗</a>
+  </div>
+</div>
+
+<!-- ── ABOUT SECTION ───────────────────────────────────── -->
+<section id="about">
+  <h2>About This Project</h2>
+  <p>
+    The Quantum Harmonic Oscillator (QHO) is the most fundamental
+    exactly-solvable quantum system. Its ground state energy is:
+    <strong style="color:#a78bfa; font-size:18px;">
+      E₀ = ½ℏω
+    </strong>
+  </p>
+  <br>
+  <p>
+    This project implements the <strong>Variational Quantum Eigensolver
+    (VQE)</strong> using IBM's <code
+    style="background:#1e293b; padding:2px 7px; border-radius:4px;
+           color:#86efac;">qiskit-nature</code> library to recover this
+    energy computationally — and validates it against the exact
+    analytical result. The project also includes a
+    <strong>visual dashboard</strong> where users can adjust parameters
+    (ℏω, shots, iterations) and run VQE without writing any code.
+  </p>
+  <br>
+
+  <!-- Tech stack cards -->
+  <div class="card-grid">
+    <div class="card">
+      <div class="icon">⚛</div>
+      <h3>Qiskit 2.4.1</h3>
+      <p>Core quantum computing SDK by IBM</p>
+    </div>
+    <div class="card">
+      <div class="icon">🧬</div>
+      <h3>qiskit-nature 0.7.2</h3>
+      <p>Bosonic second-quantization framework</p>
+    </div>
+    <div class="card">
+      <div class="icon">💻</div>
+      <h3>AerSimulator</h3>
+      <p>Local cloud quantum circuit simulator</p>
+    </div>
+    <div class="card">
+      <div class="icon">🎛</div>
+      <h3>ipywidgets + Voilà</h3>
+      <p>Interactive visual dashboard — no code needed</p>
+    </div>
+    <div class="card">
+      <div class="icon">📐</div>
+      <h3>COBYLA (scipy)</h3>
+      <p>Derivative-free classical optimizer for VQE</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── PIPELINE SECTION ────────────────────────────────── -->
+<section id="pipeline">
+  <h2>How It Works — Pipeline</h2>
+  <p style="color:#94a3b8;">
+    The project follows the complete qiskit-nature quantum simulation
+    pipeline from physics-level operator construction down to a
+    numerical result:
+  </p>
+
+  <div class="pipeline">
+    <div class="pipe-step">BosonicOp<br><small>Physics Level</small></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">SparsePauliOp<br><small>Qubit Hamiltonian</small></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">TwoLocal Ansatz<br><small>Ry(θ) circuit</small></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">AerSimulator<br><small>1024 shots</small></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step">COBYLA<br><small>Optimizer</small></div>
+    <div class="pipe-arrow">→</div>
+    <div class="pipe-step" style="border-color:#86efac; color:#86efac;">
+      E₀ ≈ 0.5 ℏω ✓
+    </div>
+  </div>
+
+  <!-- File structure -->
+  <br>
+  <h3 style="color:#7dd3fc; margin-bottom:12px;">Project Files</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="icon">📓</div>
+      <h3>QHO_Notebook.ipynb</h3>
+      <p>Full VQE implementation, theory, plots, and analysis</p>
+    </div>
+    <div class="card">
+      <div class="icon">🎛</div>
+      <h3>QHO_Dashboard.ipynb</h3>
+      <p>Interactive dashboard — run VQE with sliders and buttons</p>
+    </div>
+    <div class="card">
+      <div class="icon">📋</div>
+      <h3>requirements.txt</h3>
+      <p>All packages needed to reproduce the project</p>
+    </div>
+    <div class="card">
+      <div class="icon">🌐</div>
+      <h3>index.html</h3>
+      <p>This webpage — project landing page</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── RESULTS SECTION ─────────────────────────────────── -->
+<section id="results">
+  <h2>Results</h2>
+
+  <div class="result-box">
+    <p>VQE Ground State Energy (AerSimulator)</p>
+    <div class="big">E₀ = 0.500000 ℏω</div>
+    <p style="margin-top:8px; color:#4ade80;">
+      Absolute Error &lt; 10⁻⁸ &nbsp;|&nbsp;
+      Converged in ~23 iterations &nbsp;|&nbsp;
+      Optimization: COBYLA ✅
+    </p>
+  </div>
+  <!-- The result box highlights the key VQE output prominently -->
+
+  <table>
+    <thead>
+      <tr>
+        <th>Method</th>
+        <th>E₀ (ℏω units)</th>
+        <th>Absolute Error</th>
+        <th>Iterations</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Exact (NumPy diagonalization)</td>
+        <td class="tag-good">0.50000000</td>
+        <td>—</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>VQE (COBYLA + AerSimulator)</td>
+        <td class="tag-good">≈ 0.50000000</td>
+        <td class="tag-good">&lt; 10⁻⁸</td>
+        <td>~23</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ── HOW TO RUN SECTION ──────────────────────────────── -->
+<section id="run">
+  <h2>How to Run This Project</h2>
+
+  <div class="card-grid" style="margin-bottom:28px;">
+    <div class="card">
+      <div class="icon">1️⃣</div>
+      <h3>Clone the Repository</h3>
+      <p>Download all project files to your computer</p>
+    </div>
+    <div class="card">
+      <div class="icon">2️⃣</div>
+      <h3>Install Dependencies</h3>
+      <p>Run pip install to get all required packages</p>
+    </div>
+    <div class="card">
+      <div class="icon">3️⃣</div>
+      <h3>Launch Dashboard</h3>
+      <p>Run Voilà to open the visual interface in your browser</p>
+    </div>
+  </div>
+
+  <pre>
+# Step 1 — Clone the repository
+git clone https://github.com/deeepakchauhan/qi26_21_proposal
+cd qi26_21_proposal
+
+# Step 2 — Install all required packages
+pip install -r requirements.txt
+
+# Step 3 — Launch the visual dashboard (no code needed)
+voila QHO_Dashboard.ipynb
+
+# OR: open the full analysis notebook
+jupyter notebook QHO_Notebook.ipynb</pre>
+
+  <br>
+  <p style="color:#94a3b8; font-size:14px;">
+    ℹ The dashboard opens in your browser automatically.
+    Use the sliders to adjust ℏω and shots,
+    then click <strong style="color:#86efac;">Run VQE</strong>
+    to compute the ground state energy interactively.
+  </p>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────────── -->
+<footer>
+  <p>
+    Built by <strong style="color:#a78bfa;">Deepak Chauhan</strong>
+    · Integrated MSc Physics, NIT Surat
+    · QIntern'26 Phase 2 Proposal
+  </p>
+  <p style="margin-top:8px;">
+    <a href="https://github.com/deeepakchauhan/qi26_21_proposal"
+       target="_blank">GitHub Repository</a>
+    &nbsp;·&nbsp;
+    <a href="https://quantum.cloud.ibm.com/docs/en/guides"
+       target="_blank">IBM Quantum Docs</a>
+    &nbsp;·&nbsp;
+    <a href="https://arxiv.org/abs/1304.3061"
+       target="_blank">VQE Paper (Peruzzo 2014)</a>
+  </p>
+</footer>
+
+</body>
+</html>
