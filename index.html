@@ -344,31 +344,39 @@
     </small>
   </p>
 
-  <div class="frame-box">
-    <!-- Loading overlay: visible until iframe loads -->
-    <div id="overlay">
-      <div class="spinner"></div>
-      <p class="msg">🚀 Starting quantum environment on MyBinder...</p>
-      <p class="msg">The dashboard will appear here when ready.</p>
-      <p class="timer" id="t">⏱ 0m 00s elapsed</p>
-    </div>
 
-    <!-- The embedded Voilà dashboard -->
-    <!-- IMPORTANT: Replace the src URL below with YOUR Binder URL -->
-    <iframe
-      id="voila"
-      src="https://mybinder.org/v2/gh/deeepakchauhan/qi26_21_proposal/main?urlpath=voila%2Frender%2FQHO_QuantumApp.ipynb"
-      onload="done()"
-      allow="fullscreen"
-      sandbox="allow-scripts allow-same-origin allow-forms allow-popups" 
-    ></iframe>
-    <!--
-      src: paste your full MyBinder Voilà URL here
-      onload="done()": JavaScript function called when iframe finishes loading
-                       — this hides the spinner overlay
-    -->
+<!-- ── FRAME BOX --> 
+  <div class="frame-box" style="display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:320px; gap:24px;">  
+  <div style="text-align:center;">
+    <div style="font-size:48px; margin-bottom:16px;">⚛️</div>
+    <h3 style="color:#a78bfa; font-size:20px; margin-bottom:10px;">
+      Live VQE Dashboard
+    </h3>
+    <p style="color:#94a3b8; font-size:14px; max-width:460px; line-height:1.7;">
+      The interactive dashboard runs on MyBinder — click below to launch it 
+      in a new tab. Adjust ℏω, shots, and iterations, then hit 
+      <strong style="color:#86efac;">Run VQE</strong> to compute live.
+    </p>
+    <p style="color:#64748b; font-size:12px; margin-top:8px;">
+      ⏳ First launch takes 2–4 min to build the environment.
+    </p>
   </div>
+
+  <a href="https://mybinder.org/v2/gh/deeepakchauhan/qi26_21_proposal/main?urlpath=voila%2Frender%2FQHO_QuantumApp.ipynb"
+     target="_blank"
+     style="background:#7c3aed; color:white; padding:14px 36px; border-radius:10px;
+            font-size:16px; font-weight:600; text-decoration:none;
+            border: 2px solid #a78bfa; transition: background 0.2s;">
+    ▶ Launch Interactive Dashboard
+  </a>
+
+  <a href="https://mybinder.org/v2/gh/deeepakchauhan/qi26_21_proposal/main?urlpath=voila%2Frender%2FQHO_QuantumApp.ipynb"
+     target="_blank">
+    <img src="https://mybinder.org/badge_logo.svg" alt="Launch Binder" style="height:28px;"/>
+  </a>
+
 </div>
+
 
 <!-- RESULTS -->
 <div id="results" class="section">
