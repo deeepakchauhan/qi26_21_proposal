@@ -7,4 +7,4 @@ ipywidgets>=7.0.0
 voila
 scipy
 matplotlib
-numpy 
+numpy  
