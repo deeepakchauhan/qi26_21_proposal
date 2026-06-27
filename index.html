@@ -5,42 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>QHO Ground State Estimator — Deepak Chauhan</title>
   <style>
-    /* ── Reset and base styles ───────────────────────── */
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: 'Segoe UI', sans-serif;
       background: #0f172a;
       color: #e2e8f0;
-      line-height: 1.7;
     }
 
-    /* ── Sticky navigation bar ───────────────────────── */
+    /* Top navigation bar */
     nav {
       background: #1e293b;
-      padding: 14px 40px;
+      padding: 14px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid #334155;
-      position: sticky;
-      top: 0;
-      /* sticky: nav stays visible as user scrolls */
-      z-index: 100;
     }
-    nav .logo { font-size: 16px; font-weight: 700; color: #a78bfa; }
+    nav .logo { color: #a78bfa; font-weight: 700; font-size: 16px; }
     nav a {
       color: #94a3b8;
       text-decoration: none;
-      margin-left: 24px;
+      margin-left: 20px;
       font-size: 14px;
-      transition: color 0.2s;
     }
     nav a:hover { color: #a78bfa; }
 
-    /* ── Hero banner ─────────────────────────────────── */
+    /* Hero banner at the top */
     .hero {
-      background: linear-gradient(135deg, #1e1b4b, #0f172a, #0c1445);
-      padding: 64px 40px 48px;
+      background: linear-gradient(135deg, #1e1b4b, #0f172a);
+      padding: 60px 24px 48px;
       text-align: center;
       border-bottom: 1px solid #334155;
     }
@@ -51,34 +45,32 @@
       font-size: 11px;
       padding: 4px 14px;
       border-radius: 20px;
-      margin-bottom: 18px;
-      letter-spacing: 1px;
+      margin-bottom: 16px;
       text-transform: uppercase;
+      letter-spacing: 1px;
     }
     .hero h1 {
-      font-size: 38px;
-      font-weight: 700;
+      font-size: 36px;
       color: #f8fafc;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     .hero h1 span { color: #a78bfa; }
     .hero p {
-      font-size: 16px;
       color: #94a3b8;
-      max-width: 620px;
+      font-size: 15px;
+      max-width: 580px;
       margin: 0 auto 28px;
+      line-height: 1.7;
     }
     .btn {
       display: inline-block;
-      padding: 11px 26px;
+      padding: 10px 24px;
       border-radius: 8px;
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 500;
       text-decoration: none;
-      margin: 6px;
-      transition: opacity 0.2s;
+      margin: 4px;
     }
-    .btn:hover { opacity: 0.82; }
     .btn-primary  { background: #7c3aed; color: white; }
     .btn-outline  {
       background: transparent;
@@ -86,149 +78,157 @@
       border: 1px solid #4c1d95;
     }
 
-    /* ── Section wrapper ─────────────────────────────── */
+    /* About section */
     .section {
-      max-width: 960px;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 56px 24px;
+      padding: 52px 24px;
     }
     .section h2 {
-      font-size: 24px;
+      font-size: 22px;
       color: #7dd3fc;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
       padding-bottom: 10px;
       border-bottom: 1px solid #1e3a5f;
     }
 
-    /* ── Info cards ──────────────────────────────────── */
+    /* Tech stack cards */
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      /* Responsive: fills row with as many cards as fit */
-      gap: 14px;
-      margin-top: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      /* auto-fit: fills as many columns as possible in the row */
+      gap: 12px;
+      margin-top: 20px;
     }
     .card {
       background: #1e293b;
       border: 1px solid #334155;
       border-radius: 10px;
-      padding: 18px;
+      padding: 16px;
     }
-    .card .icon { font-size: 26px; margin-bottom: 8px; }
-    .card h3 { color: #a78bfa; font-size: 14px; margin-bottom: 5px; }
+    .card .icon { font-size: 24px; margin-bottom: 8px; }
+    .card h3 { color: #a78bfa; font-size: 13px; margin-bottom: 4px; }
     .card p  { color: #94a3b8; font-size: 12px; }
 
-    /* ── Pipeline visual ─────────────────────────────── */
+    /* Pipeline steps */
     .pipeline {
       display: flex;
       flex-wrap: wrap;
+      /* wrap: steps go to next line on small screens */
       align-items: center;
       gap: 8px;
-      margin-top: 18px;
+      margin-top: 16px;
     }
     .pipe-step {
       background: #1e293b;
       border: 1px solid #4c1d95;
       border-radius: 8px;
-      padding: 9px 15px;
-      font-size: 13px;
+      padding: 8px 14px;
+      font-size: 12px;
       color: #a78bfa;
       text-align: center;
     }
-    .pipe-arrow { color: #475569; font-size: 18px; }
+    .pipe-arrow { color: #475569; font-size: 16px; }
 
-    /* ── Results table ───────────────────────────────── */
+    /* Results table */
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 18px;
+      margin-top: 16px;
       font-size: 14px;
     }
     th {
       background: #1e3a5f;
       color: #7dd3fc;
-      padding: 12px 16px;
+      padding: 10px 14px;
       text-align: left;
     }
     td {
-      padding: 11px 16px;
+      padding: 10px 14px;
       border-bottom: 1px solid #1e293b;
       color: #cbd5e1;
     }
     tr:hover td { background: #1e293b; }
     .green { color: #86efac; font-weight: 600; }
 
-    /* ── LIVE DASHBOARD SECTION ──────────────────────── */
+    /* ── LIVE DASHBOARD SECTION — most important part ── */
     .dashboard-section {
       background: #020617;
       border-top: 1px solid #334155;
       border-bottom: 1px solid #334155;
-      padding: 56px 24px;
+      padding: 52px 24px;
       text-align: center;
     }
     .dashboard-section h2 {
-      font-size: 26px;
+      font-size: 24px;
       color: #7dd3fc;
       margin-bottom: 8px;
     }
-    .dashboard-section p {
+    .dashboard-section .sub {
       color: #94a3b8;
-      margin-bottom: 28px;
-      font-size: 15px;
+      font-size: 14px;
+      margin-bottom: 24px;
+      line-height: 1.6;
     }
 
-    /* Loading overlay shown before iframe loads */
-    .iframe-wrapper {
+    /* Container for the iframe + loading overlay */
+    .frame-box {
       position: relative;
-      max-width: 960px;
+      /* relative: allows absolute children (overlay) to position inside it */
+      max-width: 940px;
       margin: 0 auto;
       border-radius: 12px;
       overflow: hidden;
+      /* overflow:hidden clips the iframe corners to match border-radius */
       border: 1px solid #334155;
       background: #1e293b;
-      min-height: 600px;
+      min-height: 620px;
     }
-    .loading-overlay {
+
+    /* Loading overlay shown while Binder/Voilà boots */
+    #overlay {
       position: absolute;
       inset: 0;
-      /* inset:0 = top:0, right:0, bottom:0, left:0 (fills container) */
+      /* inset:0 = top,right,bottom,left all 0 → fills entire frame-box */
+      background: #1e293b;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: #1e293b;
-      z-index: 10;
-      /* z-index: sits on top of the iframe while loading */
-      transition: opacity 0.5s;
+      z-index: 5;
+      /* z-index:5 puts overlay above the iframe */
+      transition: opacity 0.6s;
+      /* smooth fade-out when iframe loads */
     }
+
+    /* Spinning loader circle */
     .spinner {
-      width: 48px; height: 48px;
-      border: 4px solid #334155;
+      width: 52px; height: 52px;
+      border: 5px solid #334155;
       border-top-color: #a78bfa;
+      /* top part is purple, rest is dark grey → creates spinning effect */
       border-radius: 50%;
       animation: spin 1s linear infinite;
-      /* Rotating purple spinner shown while Binder loads */
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    /* Keyframe: rotates the spinner element continuously */
-
-    .loading-overlay p { color: #94a3b8; font-size: 14px; }
-    .loading-overlay .timer {
-      color: #a78bfa;
-      font-size: 13px;
-      margin-top: 6px;
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+      /* rotates 360 degrees continuously */
     }
 
-    #voila-frame {
+    #overlay .msg  { color: #94a3b8; font-size: 14px; margin-bottom: 6px; }
+    #overlay .timer { color: #a78bfa; font-size: 13px; font-family: monospace; }
+
+    /* The actual embedded Voilà dashboard */
+    #voila {
       width: 100%;
-      height: 700px;
+      height: 680px;
       border: none;
-      /* border:none removes the default iframe border */
+      /* border:none removes default iframe border line */
       display: block;
     }
 
-    /* ── Footer ──────────────────────────────────────── */
+    /* Footer */
     footer {
       text-align: center;
       padding: 28px;
@@ -239,10 +239,9 @@
     footer a { color: #7c3aed; text-decoration: none; }
   </style>
 </head>
-
 <body>
 
-<!-- ── NAV ────────────────────────────────────────────── -->
+<!-- NAVIGATION -->
 <nav>
   <div class="logo">⚛ QHO Estimator</div>
   <div>
@@ -251,145 +250,148 @@
     <a href="#results">Results</a>
     <a href="https://github.com/deeepakchauhan/qi26_21_proposal"
        target="_blank">GitHub ↗</a>
+    <!-- target="_blank" opens link in new tab -->
   </div>
 </nav>
 
-<!-- ── HERO ───────────────────────────────────────────── -->
+<!-- HERO -->
 <div class="hero">
-  <div class="badge">QIntern'26 — Phase 2 Proposal</div>
+  <div class="badge">QIntern'26 · Phase 2 Proposal</div>
   <h1>🔬 <span>Quantum</span> Harmonic Oscillator<br>Ground State Estimator</h1>
   <p>
     A VQE-based quantum simulation using <strong>qiskit-nature</strong>,
-    with a live interactive dashboard below — adjust parameters and
-    run the quantum algorithm directly in your browser.
+    with a live interactive dashboard — adjust parameters and run
+    the quantum algorithm directly in your browser. No installation needed.
   </p>
-  <a href="#live" class="btn btn-primary">▶ Try the Live Demo</a>
+  <a href="#live" class="btn btn-primary">▶ Try Live Demo</a>
   <a href="https://github.com/deeepakchauhan/qi26_21_proposal"
-     target="_blank" class="btn btn-outline">GitHub ↗</a>
+     target="_blank" class="btn btn-outline">View Code ↗</a>
 </div>
 
-<!-- ── ABOUT ───────────────────────────────────────────── -->
+<!-- ABOUT -->
 <div id="about" class="section">
   <h2>About This Project</h2>
-  <p>
-    The Quantum Harmonic Oscillator (QHO) has exact ground state energy
-    <strong style="color:#a78bfa; font-size:17px;">E₀ = ½ℏω</strong>.
-    This project uses the <strong>Variational Quantum Eigensolver (VQE)</strong>
-    with IBM's <code style="background:#1e293b; padding:2px 7px;
-    border-radius:4px; color:#86efac;">qiskit-nature</code> library to
-    recover this energy computationally and validates it against the
-    exact analytical result.
+  <p style="color:#94a3b8; line-height:1.8;">
+    The Quantum Harmonic Oscillator has exact ground state energy
+    <strong style="color:#a78bfa;">E₀ = ½ℏω</strong>.
+    This project uses the Variational Quantum Eigensolver (VQE)
+    via IBM's <code style="background:#1e293b; padding:2px 7px;
+    border-radius:4px; color:#86efac;">qiskit-nature</code>
+    to recover this computationally and validates it against the exact result.
   </p>
-  <div class="cards" style="margin-top:24px;">
+
+  <!-- Tech stack cards -->
+  <div class="cards">
     <div class="card">
       <div class="icon">⚛</div>
       <h3>Qiskit 2.4.1</h3>
-      <p>Core IBM quantum SDK</p>
+      <p>IBM core quantum SDK</p>
     </div>
     <div class="card">
       <div class="icon">🧬</div>
-      <h3>qiskit-nature 0.7.2</h3>
+      <h3>qiskit-nature</h3>
       <p>Bosonic Hamiltonian construction</p>
     </div>
     <div class="card">
       <div class="icon">💻</div>
       <h3>AerSimulator</h3>
-      <p>Local quantum circuit simulator</p>
+      <p>Quantum circuit simulator</p>
     </div>
     <div class="card">
       <div class="icon">🎛</div>
       <h3>ipywidgets + Voilà</h3>
-      <p>Interactive visual dashboard</p>
+      <p>Visual interactive dashboard</p>
     </div>
     <div class="card">
       <div class="icon">📐</div>
       <h3>COBYLA</h3>
-      <p>Derivative-free optimizer</p>
+      <p>Classical optimizer</p>
     </div>
   </div>
 
+  <!-- Pipeline -->
   <br>
-  <h3 style="color:#7dd3fc; margin-bottom:14px;">Pipeline</h3>
+  <h3 style="color:#7dd3fc; margin-bottom:12px; margin-top:8px;">Pipeline</h3>
   <div class="pipeline">
-    <div class="pipe-step">BosonicOp<br><small>Physics level</small></div>
+    <div class="pipe-step">BosonicOp<br><small>Physics</small></div>
     <div class="pipe-arrow">→</div>
-    <div class="pipe-step">SparsePauliOp<br><small>Qubit Hamiltonian</small></div>
+    <div class="pipe-step">SparsePauliOp<br><small>Qubits</small></div>
     <div class="pipe-arrow">→</div>
-    <div class="pipe-step">TwoLocal<br><small>Ry(θ) ansatz</small></div>
+    <div class="pipe-step">TwoLocal<br><small>Ansatz</small></div>
     <div class="pipe-arrow">→</div>
-    <div class="pipe-step">AerSimulator<br><small>1024 shots</small></div>
+    <div class="pipe-step">AerSimulator<br><small>Shots</small></div>
     <div class="pipe-arrow">→</div>
-    <div class="pipe-step">COBYLA<br><small>Minimize ⟨H⟩</small></div>
+    <div class="pipe-step">COBYLA<br><small>Minimize</small></div>
     <div class="pipe-arrow">→</div>
-    <div class="pipe-step" style="border-color:#86efac; color:#86efac;">
+    <div class="pipe-step"
+         style="border-color:#86efac; color:#86efac;">
       E₀ ≈ 0.5 ℏω ✓
     </div>
   </div>
 </div>
 
-<!-- ── LIVE DASHBOARD (THE KEY SECTION) ───────────────── -->
+<!-- ── LIVE DASHBOARD — THIS IS THE KEY SECTION ────────── -->
 <div id="live" class="dashboard-section">
   <h2>🎛 Live Interactive Dashboard</h2>
-  <p>
-    Adjust <strong>ℏω</strong>, shots, and iterations using the sliders
-    below — then click <strong style="color:#86efac;">Run VQE</strong>
-    to compute the ground state energy. Powered by Voilà + MyBinder.
-    <br>
+  <p class="sub">
+    Adjust <strong style="color:#e2e8f0;">ℏω</strong>,
+    shots, and iterations using the sliders —
+    then click <strong style="color:#86efac;">Run VQE</strong>
+    to compute the ground state energy live.<br>
     <small style="color:#64748b;">
-      ⏳ First load takes 2–4 minutes while the environment builds.
-      Subsequent loads are faster.
+      ⏳ First load takes 2–4 minutes (Binder is building the environment).
+      Keep the page open — it will appear automatically.
     </small>
   </p>
 
-  <div class="iframe-wrapper">
-
-    <!-- Loading overlay — visible while iframe loads -->
-    <div class="loading-overlay" id="loadingOverlay">
+  <div class="frame-box">
+    <!-- Loading overlay: visible until iframe loads -->
+    <div id="overlay">
       <div class="spinner"></div>
-      <p>🚀 Starting quantum environment on MyBinder...</p>
-      <p class="timer" id="timerDisplay">This may take 2–4 minutes on first load.</p>
+      <p class="msg">🚀 Starting quantum environment on MyBinder...</p>
+      <p class="msg">The dashboard will appear here when ready.</p>
+      <p class="timer" id="t">⏱ 0m 00s elapsed</p>
     </div>
-    <!-- The overlay disappears automatically when the iframe finishes loading -->
 
+    <!-- The embedded Voilà dashboard -->
+    <!-- IMPORTANT: Replace the src URL below with YOUR Binder URL -->
     <iframe
-      id="voila-frame"
-      src="src="https://mybinder.org/v2/gh/deeepakchauhan/qi26_21_proposal/HEAD?urlpath=voila%2Frender%2FQHO_QuantumApp.ipynb""
-      onload="hideOverlay()"
-    >
+      id="voila"
+      src="https://hub.bids.mybinder.org/user/deeepakchauhan-qi26_21_proposal-9jkae31c/voila/files/QHO_QuantumAppipynb"
+      onload="done()"
+    ></iframe>
     <!--
-      src: the MyBinder Voilà URL — REPLACE THIS with your actual
-           Binder link from Step 2 above
-
-      onload="hideOverlay()": JavaScript function called automatically
-      when the iframe finishes loading — hides the spinner overlay
+      src: paste your full MyBinder Voilà URL here
+      onload="done()": JavaScript function called when iframe finishes loading
+                       — this hides the spinner overlay
     -->
-    </iframe>
   </div>
 </div>
 
-<!-- ── RESULTS ─────────────────────────────────────────── -->
+<!-- RESULTS -->
 <div id="results" class="section">
   <h2>Results</h2>
+
+  <!-- Result highlight box -->
   <div style="background:#0d2d1a; border-left:4px solid #86efac;
               border-radius:8px; padding:20px 24px; margin-bottom:20px;">
     <p style="color:#94a3b8;">VQE Ground State Energy (AerSimulator)</p>
-    <div style="font-size:34px; font-weight:700; color:#4ade80;
+    <div style="font-size:32px; font-weight:700; color:#4ade80;
                 font-family:monospace; margin:8px 0;">
       E₀ = 0.500000 ℏω
     </div>
     <p style="color:#86efac;">
       Absolute Error &lt; 10⁻⁸ &nbsp;|&nbsp;
-      ~23 iterations &nbsp;|&nbsp; COBYLA ✅
+      ~23 iterations &nbsp;|&nbsp;
+      COBYLA converged ✅
     </p>
   </div>
 
   <table>
     <thead>
       <tr>
-        <th>Method</th>
-        <th>E₀ (ℏω)</th>
-        <th>Error</th>
-        <th>Iterations</th>
+        <th>Method</th><th>E₀ (ℏω)</th>
+        <th>Error</th><th>Iterations</th>
       </tr>
     </thead>
     <tbody>
@@ -408,7 +410,7 @@
   </table>
 </div>
 
-<!-- ── FOOTER ──────────────────────────────────────────── -->
+<!-- FOOTER -->
 <footer>
   <p>
     <strong style="color:#a78bfa;">Deepak Chauhan</strong>
@@ -418,52 +420,47 @@
     <a href="https://github.com/deeepakchauhan/qi26_21_proposal"
        target="_blank">GitHub</a> ·
     <a href="https://arxiv.org/abs/1304.3061"
-       target="_blank">VQE Paper</a> ·
+       target="_blank">VQE Paper (Peruzzo 2014)</a> ·
     <a href="https://quantum.cloud.ibm.com/docs/en/guides"
        target="_blank">IBM Quantum Docs</a>
   </p>
 </footer>
 
-<!-- ── JAVASCRIPT ─────────────────────────────────────── -->
+<!-- JAVASCRIPT -->
 <script>
-  function hideOverlay() {
-    // Called automatically by iframe's onload event
-    // when Binder finishes loading the Voilà dashboard
-    const overlay = document.getElementById('loadingOverlay');
-    overlay.style.opacity = '0';
-    // Fade out the loading overlay smoothly (CSS transition handles this)
-    setTimeout(() => overlay.style.display = 'none', 500);
-    // After 0.5 seconds (500ms), fully remove overlay from layout
-    // so it no longer blocks mouse clicks on the iframe
-  }
+  // ── Timer: counts seconds while Binder loads ──────────
+  let s = 0;
+  const el = document.getElementById('t');
 
-  // ── Loading timer countdown display ────────────────
-  let seconds = 0;
-  const timerEl = document.getElementById('timerDisplay');
+  const timer = setInterval(() => {
+    s++;
+    // Increment total seconds by 1 every loop
 
-  const interval = setInterval(() => {
-    seconds++;
-    // Increment counter every second
+    const m = Math.floor(s / 60);
+    // Calculate full minutes elapsed
 
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    // Convert total seconds into minutes and remaining seconds
+    const sec = s % 60;
+    // Remaining seconds after removing full minutes
 
-    timerEl.textContent =
-      `⏱ Loading... ${mins}m ${secs < 10 ? '0' : ''}${secs}s elapsed`;
-    // Update the timer text shown under the spinner
-    // Pads single-digit seconds with a leading zero (e.g. "1m 05s")
+    el.textContent =
+      `⏱ ${m}m ${sec < 10 ? '0' : ''}${sec}s elapsed`;
+    // Update displayed timer text
+    // sec < 10 ? '0' : '' adds leading zero for single digits (e.g. "05")
   }, 1000);
-  // setInterval: runs this function every 1000ms (1 second)
+  // Run every 1000 milliseconds = every 1 second
 
-  window.hideOverlay = function() {
-    // Make hideOverlay accessible globally so iframe's
-    // onload attribute can call it
-    clearInterval(interval);
-    // Stop the timer when loading is complete
-    const overlay = document.getElementById('loadingOverlay');
-    overlay.style.opacity = '0';
-    setTimeout(() => overlay.style.display = 'none', 500);
+  // ── done(): hides overlay when iframe finishes loading ──
+  function done() {
+    clearInterval(timer);
+    // Stop the timer — loading is complete
+
+    const ov = document.getElementById('overlay');
+    ov.style.opacity = '0';
+    // Fade out the overlay (CSS transition:0.6s handles the animation)
+
+    setTimeout(() => ov.style.display = 'none', 650);
+    // After fade completes (650ms), fully remove overlay
+    // so it no longer blocks mouse clicks on the dashboard
   }
 </script>
 
