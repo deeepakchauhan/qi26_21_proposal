@@ -1,7 +1,7 @@
 qiskit==2.4.1
 qiskit-aer==0.15.0
 qiskit-ibm-runtime
-qiskit-nature==0.8.2
+qiskit-nature==0.7.2
 qiskit-algorithms==0.3.0
 ipywidgets>=7.0.0
 voila
