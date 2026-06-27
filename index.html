@@ -435,44 +435,5 @@
        target="_blank">IBM Quantum Docs</a>
   </p>
 </footer>
-
-<!-- JAVASCRIPT -->
-<script>
-  // ── Timer: counts seconds while Binder loads ──────────
-  let s = 0;
-  const el = document.getElementById('t');
-
-  const timer = setInterval(() => {
-    s++;
-    // Increment total seconds by 1 every loop
-
-    const m = Math.floor(s / 60);
-    // Calculate full minutes elapsed
-
-    const sec = s % 60;
-    // Remaining seconds after removing full minutes
-
-    el.textContent =
-      `⏱ ${m}m ${sec < 10 ? '0' : ''}${sec}s elapsed`;
-    // Update displayed timer text
-    // sec < 10 ? '0' : '' adds leading zero for single digits (e.g. "05")
-  }, 1000);
-  // Run every 1000 milliseconds = every 1 second
-
-  // ── done(): hides overlay when iframe finishes loading ──
-  function done() {
-    clearInterval(timer);
-    // Stop the timer — loading is complete
-
-    const ov = document.getElementById('overlay');
-    ov.style.opacity = '0';
-    // Fade out the overlay (CSS transition:0.6s handles the animation)
-
-    setTimeout(() => ov.style.display = 'none', 650);
-    // After fade completes (650ms), fully remove overlay
-    // so it no longer blocks mouse clicks on the dashboard
-  }
-</script>
-
 </body>
 </html>
